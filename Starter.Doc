@@ -1,0 +1,28 @@
+Install Python Version 3.11 (stable)
+
+
+# Install Python 3.11 using Windows Package Manager
+winget install Python.Python.3.11
+
+
+
+# See all Python versions installed
+py --list
+
+
+
+# Check if Python 3.11 is now available
+py -3.11 --version
+
+# Create the virtual environment
+py -3.11 -m venv venv311
+
+# Activate it
+venv311\Scripts\activate
+
+# Verify you're using 3.11
+python --version
+
+
+# Quick test to verify everything works
+python -c "import fastapi, torch, transformers, sklearn; print('✅ All major packages imported successfully!')"
