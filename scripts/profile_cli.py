@@ -11,8 +11,8 @@ import json
 from pathlib import Path
 from typing import Dict, Any
 
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.core.profile_manager import ProfileManager
 from src.utils.logger import configure_logging

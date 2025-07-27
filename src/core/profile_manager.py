@@ -100,6 +100,8 @@ class ProfileManager:
                     ).first()
                 
                 if profile:
+                    # Expunge the profile from the session so it can be used outside
+                    session.expunge(profile)
                     logger.info(f"Loaded profile: {profile.profile_name}")
                     return profile
                 else:
