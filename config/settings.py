@@ -1,4 +1,3 @@
-  
 """
 Application settings and configuration management.
 
@@ -8,7 +7,8 @@ and configuration validation using Pydantic for type safety.
 
 import os
 from typing import Optional
-from pydantic import BaseSettings, validator
+from pydantic import BaseModel, field_validator  # Updated import
+from pydantic_settings import BaseSettings      # Updated import location
 from pathlib import Path
 
 
@@ -52,7 +52,8 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
         case_sensitive = False
     
-    @validator("log_level")
+    @field_validator("log_level")  # Updated decorator
+    @classmethod
     def validate_log_level(cls, v):
         """Validate log level is one of the accepted values."""
         valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -60,21 +61,24 @@ class Settings(BaseSettings):
             raise ValueError(f"Log level must be one of: {valid_levels}")
         return v.upper()
     
-    @validator("log_file_path")
+    @field_validator("log_file_path")  # Updated decorator
+    @classmethod
     def create_log_directory(cls, v):
         """Ensure log directory exists."""
         log_path = Path(v)
         log_path.parent.mkdir(parents=True, exist_ok=True)
         return str(log_path)
     
-    @validator("browser_timeout")
+    @field_validator("browser_timeout")  # Updated decorator
+    @classmethod
     def validate_browser_timeout(cls, v):
         """Ensure browser timeout is reasonable."""
         if v < 5000 or v > 120000:
             raise ValueError("Browser timeout must be between 5 and 120 seconds")
         return v
     
-    @validator("max_applications_per_session")
+    @field_validator("max_applications_per_session")  # Updated decorator
+    @classmethod
     def validate_max_applications(cls, v):
         """Ensure reasonable application limits."""
         if v < 1 or v > 200:
